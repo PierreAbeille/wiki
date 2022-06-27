@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /FRONT/wiki_front/node_modules
+/BACK/node_modules
 /.pnp
 .pnp.js
 
