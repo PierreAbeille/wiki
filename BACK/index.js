@@ -1,4 +1,5 @@
 const express = require('express');
+
 let MongoClient = require('mongodb').MongoClient;
 const app = express();
 const port = 3000;
@@ -22,9 +23,11 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/Wiki
 
 
 
+
 app.get('/', (req, res)=>{
     res.send('tetutust')
 })
+
 
 app.get('/api/db/setup', (req,res)=>{
     
@@ -73,3 +76,4 @@ app.get('/tags', (req,res)=>{
 app.get('/tags/create', (req,res)=>{
 
 })
+
