@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Loader from '../components/loader';
 
 
 const Articles = () => {
@@ -20,7 +21,7 @@ const Articles = () => {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>
+        return <Loader />
     }
 
     return (
@@ -28,7 +29,7 @@ const Articles = () => {
             <h1>Articles</h1>
             <ul>
             {articles.map(article => (
-                    <li key={article.id}>
+                    <li key={article._id}>
                         <Link href={`/article/${article._id}`}>
                             <a>{article.title}</a>
                         </Link>

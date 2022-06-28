@@ -1,6 +1,8 @@
 import styles from '../styles/pages.module.scss'
 import Sidenav from '../components/sidenav';
 import Article from '../components/article';
+import Loader from '../components/loader';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
   //get the last three articles
@@ -10,23 +12,22 @@ export default function Home() {
     const fetchData = async () => {
       const res = await fetch('/api/articles');
       const data = await res.json();
-      setArticles(data.articles);
+      setArticles(data);
       setLoading(false);
     }
     fetchData();
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>
+    return <Loader />
   }
   
   return (
     <div className={styles.container}>
       <Sidenav />
-      //display the last three articles
       <div className={styles.articles}>
         {articles.map(article => (
-          <Article key={article.id} article={article} />
+          <Article id={article._id}/>
         ))}
       </div>
     </div>
