@@ -1,6 +1,3 @@
-//Make a react component for part of the sidenav. It must display a list of categories or tags.
-
-
 import styles from '../styles/components.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -12,9 +9,14 @@ const SidenavPart = (type) => {
     const [list, setList] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const typeString = type.type;
+
+    const typeStringSingulier = typeString.charAt(0) + typeString.slice(1);
+
+
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`/api/${type}`);
+            const res = await fetch(`/api/${typeString}`);
             const data = await res.json();
             setList(data);
             setLoading(false);
@@ -30,9 +32,9 @@ const SidenavPart = (type) => {
         <div>
             <ul>
                 {list.map(item => (
-                    <li key={item.id}>
-                        <Link href={`/${type}/${item.id}`}>
-                            <a>{item.title}</a>
+                    <li>
+                        <Link href={`/${typeStringSingulier}/${item._id}`}>
+                            <a>{item.name}</a>
                         </Link>
                     </li>
                 ))}
