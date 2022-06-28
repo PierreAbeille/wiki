@@ -1,12 +1,8 @@
 const express = require('express');
-
 let MongoClient = require('mongodb').MongoClient;
 const app = express();
 const port = 3000;
-
 app.use(express.json())
-
-
 
 MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTest?retryWrites=true&w=majority', function (err, client) {
     if (err) throw err;
@@ -143,7 +139,12 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             })
         })
         
-        app.get('/search', (req,res)=>{
+        app.get('/search', (req,res, next)=>{
+
+            let parTitre = articles.find({ $or: [ { tags: req.body.input } , { title: req.body.input } ] }).toArray(function(err, result) {
+                if (err) throw err;
+                res.status(200).send(result)
+            })
             
         })
 
@@ -165,10 +166,8 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
                 title: "article1",
                 content: "Bojoure c'est canare",
                 version: "1",
-                tags: {
-                    "1":"tag1",
-                    "2":"tag2"
-                }
+                tags: ["tag1", "tag2"]
+
             }, function (err, result) { if (err) throw err; })
 
             res.send('Bdd initialisée')
