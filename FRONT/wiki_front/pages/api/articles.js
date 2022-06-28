@@ -6,8 +6,6 @@ export default function handler(req, res) {
         method: "GET"
     })
     .then((resp) => {
-        // console.log(resp.data);
-
         var lookup = {};
         var items = resp.data;
         var result = [];

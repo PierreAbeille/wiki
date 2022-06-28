@@ -38,17 +38,11 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             })
         })
         app.get('/articles/:id', (req,res)=>{
-            articles.find({ title: req.params.id }).toArray(function(err, result) {
+            articles.find({ _id: new ObjectId(req.params.id) }).toArray(function(err, result) {
                 if (err) throw err;
                 res.status(200).send(result)
             })
         })
-
-        //Surcharge inutile ?
-        app.get('/articles/:id/versions', (req,res)=>{
-            
-        })
-
 
         app.post('/articles', (req,res)=>{
             articles.insertOne({ 

@@ -4,14 +4,15 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 
-const Article = ({id}) => {
+const Article = () => {
     const router = useRouter();
+    const { id } = router.query
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`/api/articles/${id}`);
+            const res = await fetch(`/api/article/${id}`);
             const data = await res.json();
             setArticle(data);
             setLoading(false);
@@ -20,14 +21,18 @@ const Article = ({id}) => {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>
+        return <p>Loading... {id}</p>
     }
 
     return (
         <div>
+            
+            
             <h1>{article.title}</h1>
-            <p>{article.date}</p>
             <p>{article.content}</p>
+            <p>{article.version}</p>
+            
+            
         </div>
     )
 }
