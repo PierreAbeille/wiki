@@ -27,14 +27,15 @@ const Articles = () => {
         <div>
             <h1>Articles</h1>
             <ul>
-                {articles.articles.map(article => (
+            {articles.map(article => (
                     <li key={article.id}>
-                        <Link href={`/article/${article.id}`}>
+                        <Link href={`/article/${article._id}`}>
                             <a>{article.title}</a>
                         </Link>
                         <span>{article.date}</span>
                     </li>
-                ))}
+            ))}
+
             </ul>
         </div>
     )

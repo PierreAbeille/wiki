@@ -4,6 +4,11 @@ const app = express();
 const port = 3000;
 app.use(express.json())
 
+app.post("/post", (req, res) => {
+    console.log("Connected to React");
+    res.redirect("/");
+  });
+
 MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTest?retryWrites=true&w=majority', function (err, client) {
     if (err) throw err;
     else {
@@ -59,18 +64,14 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
         })
 
         app.put('/articles/:id', (req,res)=>{
-            let article = articles.findOne({ name: req.params.id }, function (err, result) {
+            let article = articles.findOne({ _id: req.params.id }, function (err, result) {
                 if (err) throw err;
             })
-            tags.insertOne({
-                _id: new ObjectId(req.params.id) 
-            }, {
-                $set: {
-                    title: article.title,
+            articles.insertOne({
+                    title: req.body.title,
                     content: req.body.content,
                     version: Date.now(),
                     tags: req.body.tags
-                }
             }, function (err, result) {
                 if (err) throw err;
                 res.json({
@@ -165,7 +166,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             articles.insertOne({
                 title: "article1",
                 content: "Bojoure c'est canare",
-                version: "1",
+                version: new Date(),
                 tags: ["tag1", "tag2"]
 
             }, function (err, result) { if (err) throw err; })

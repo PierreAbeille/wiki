@@ -1,22 +1,26 @@
+import axios from "axios";
+
 export default function handler(req, res) {
-    //return a fake api response for the articles page
-    res.json({
-        articles: [
-            {
-                id: 1,
-                title: 'Article 1',
-                date: '2020-01-01'
-            },
-            {
-                id: 2,
-                title: 'Article 2',
-                date: '2020-01-02'
-            },
-            {
-                id: 3,
-                title: 'Article 3',
-                date: '2020-01-03'
+    axios({
+        url: "http://localhost:3000/articles",
+        method: "GET"
+    })
+    .then((resp) => {
+        // console.log(resp.data);
+
+        var lookup = {};
+        var items = resp.data;
+        var result = [];
+
+        for (var item, i = 0; item = items[i++];) {
+            var name = item.title;
+
+            if (!(name in lookup)) {
+                lookup[name] = 1;
+                result.push(item);
             }
-        ]
-    });
+        }
+        res.status(200).send(result)  
+    })
+    .catch((err) => { console.log(err) });
 }
