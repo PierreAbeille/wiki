@@ -15,16 +15,16 @@ export default function Articles({articles}) {
                         <Link href={`/article/${article._id}`}>
                             <a>{article.title}</a>
                         </Link>
-                        <Link href={`api/article/delete/${article._id}`}>
+                        <Link href={`api/article/delete/${article.title}`}>
                             <a>[X]</a>
-                        </Link>
-                        <Link href={`article/creer`}>
-                            <a>Créer un article</a>
                         </Link>
                     </li>
             ))}
 
-            </ul>
+            </ul><br/><br/>
+            <Link href={`article/creer`}>
+                            <a>Créer un article</a>
+                        </Link>
         </div>
     )
 }
