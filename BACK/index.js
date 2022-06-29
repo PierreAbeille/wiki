@@ -127,6 +127,14 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             })
         })
 
+        app.post('/categories', (req,res)=>{
+            categories.insertOne({ name: req.body.name }, 
+                function (err, result) {
+                    if (err) throw err;
+                    res.json(result);
+            })
+        })
+
         app.put('/categories/:id', (req,res)=>{
             categories.updateOne({
                 _id: new ObjectId(req.params.id) 
