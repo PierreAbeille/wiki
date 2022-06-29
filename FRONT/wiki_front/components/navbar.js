@@ -13,6 +13,9 @@ const Navbar = () => {
                     <li>
                         <NavbarTab link='/categories' text='Catégories' />
                     </li>
+                    <li>
+                        <NavbarTab link='/tags' text='Tags' />
+                    </li>
                 </ul>
                 <form>
                     <input type="search" placeholder="Search"/>

@@ -7,14 +7,14 @@ import { useEffect, useState } from 'react';
 const Categorie = () => {
     const router = useRouter();
     const { id } = router.query
-    const [categorie, setCategorie] = useState(null);
+    const [tag, setTag] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`/api/categorie/${id}`);
+            const res = await fetch(`/api/tag/${id}`);
             const data = await res.json();
-            setCategorie(data);
+            setTag(data);
             setLoading(false);
         }
         fetchData();
@@ -26,7 +26,7 @@ const Categorie = () => {
 
     return (
         <div>
-            <h1>{categorie.name}</h1>
+            <h1>{tag.name}</h1>
         </div>
     )
 }
