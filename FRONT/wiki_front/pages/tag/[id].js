@@ -27,6 +27,12 @@ const Categorie = () => {
     return (
         <div>
             <h1>{tag.name}</h1>
+
+            <form action="/api/tag/edit" method="POST">
+                Choisir un nouveau nom pour ce tag : <input name="name" id="name" type="text"/>
+                <input type="text" name="id" id="id" hidden value={tag._id}/>
+                <input type="submit"/>
+            </form>
         </div>
     )
 }

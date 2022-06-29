@@ -127,6 +127,22 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             })
         })
 
+        app.put('/categories/:id', (req,res)=>{
+            categories.updateOne({
+                _id: new ObjectId(req.params.id) 
+            }, {
+                $set: {
+                    name: req.body.name
+                }
+            }, function (err, result) {
+                if (err) throw err;
+                res.json({
+                    status: "200",
+                    data: result
+                });
+            });
+        })
+
         app.delete('/categories/:id', (req,res)=>{
             categories.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
                 if (err) throw err;

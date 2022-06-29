@@ -32,7 +32,9 @@ const Article = () => {
             <p>{article.content}</p>
             <p>{article.version}</p>
             
-            
+            <Link href={`edit/${article._id}`}>
+                <a>Editer cet article</a>
+            </Link>
         </div>
     )
 }
