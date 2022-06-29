@@ -31,7 +31,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
                 res.status(200).send(result)
             })
         })
-        app.delete('/articles', (req,res)=>{
+        app.delete('/articles/:id', (req,res)=>{
             articles.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
                 if (err) throw err;
                 res.json(result)
@@ -124,6 +124,13 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             categories.find({}).toArray(function (err, result) {
                 if (err) throw err;
                 res.status(200).send(result)
+            })
+        })
+
+        app.delete('/categories/:id', (req,res)=>{
+            categories.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
+                if (err) throw err;
+                res.json(result)
             })
         })
 

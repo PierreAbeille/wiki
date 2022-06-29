@@ -32,6 +32,9 @@ const Categories = () => {
                         <Link href={`/tag/${tag._id}`}>
                             <a>{tag.name}</a>
                         </Link>
+                        <Link href={`api/tag/delete/${tag._id}`}>
+                            <a>[X]</a>
+                        </Link>
                     </li>
                 ))}
             </ul>

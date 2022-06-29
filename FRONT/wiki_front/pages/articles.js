@@ -32,7 +32,9 @@ const Articles = () => {
                         <Link href={`/article/${article._id}`}>
                             <a>{article.title}</a>
                         </Link>
-                        <span>{article.date}</span>
+                        <Link href={`api/article/delete/${article._id}`}>
+                            <a>[X]</a>
+                        </Link>
                     </li>
             ))}
 
