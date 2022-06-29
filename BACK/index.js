@@ -9,36 +9,27 @@ app.post("/post", (req, res) => {
     res.redirect("/");
   });
 
-MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTest?retryWrites=true&w=majority', function (err, client) {
+MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki?retryWrites=true&w=majority', function (err, client) {
     if (err) throw err;
     else {
-
         console.log("Connecté à la base de données");
         let db = client.db('DBTest');
         let ObjectId = require('mongodb').ObjectId;
-        let articles = db.collection('wiki');
+        let articles = db.collection('articles');
         let tags = db.collection('tags');
         let categories = db.collection('categories');
 
-        app.get('/', (req, res)=>{
-            res.send('Bienvenue')
-        })
+
+        // app.get('/', (req, res)=>{
+        //     res.send('Bienvenue')
+        // })
+
+
+
 
         // Liens ARTICLES
         app.get('/articles', (req, res, next)=>{
             articles.find({}).toArray(function (err, result) {
-                if (err) throw err;
-                res.status(200).send(result)
-            })
-        })
-        app.delete('/articles/:id', (req,res)=>{
-            articles.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
-                if (err) throw err;
-                res.json(result)
-            })
-        })
-        app.get('/articles/:id', (req,res)=>{
-            articles.find({ _id: new ObjectId(req.params.id) }).toArray(function(err, result) {
                 if (err) throw err;
                 res.status(200).send(result)
             })
@@ -56,6 +47,21 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
                     res.json(result);
             })
         })
+
+        app.delete('/articles/:id', (req,res)=>{
+            articles.deleteMany({ title: req.params.id}, function (err, result){
+                if (err) throw err;
+                res.status(200).json(result)
+            })
+        })
+        app.get('/articles/:id', (req,res)=>{
+            articles.find({ _id: new ObjectId(req.params.id) }).toArray(function(err, result) {
+                if (err) throw err;
+                res.status(200).send(result)
+            })
+        })
+
+        
 
         app.put('/articles/:id', (req,res)=>{
             let article = articles.findOne({ _id: req.params.id }, function (err, result) {
@@ -75,18 +81,13 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             });
         })
 
+
+
         // LIENS DES TAGS
         app.delete('/tags/:id', (req,res)=>{
             tags.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
                 if (err) throw err;
                 res.json(result)
-            })
-        })
-        app.post('/tags', (req,res)=>{
-            tags.insertOne({ name: req.body.name }, 
-                function (err, result) {
-                    if (err) throw err;
-                    res.json(result);
             })
         })
         app.put('/tags/:id', (req,res)=>{
@@ -104,12 +105,6 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
                 });
             });
         })
-        app.get('/tags', (req, res, next)=>{
-            tags.find({}).toArray(function (err, result) {
-                if (err) throw err;
-                res.status(200).send(result)
-            })
-        })
         app.get('/tags/:id', (req,res)=>{
             tags.findOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
                 if (err) throw err;
@@ -117,16 +112,38 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             })
         })
 
+        app.post('/tags', (req,res)=>{
+            tags.insertOne({ name: req.body.name }, 
+                function (err, result) {
+                    if (err) throw err;
+                    res.json(result);
+            })
+        })
+        
+        app.get('/tags', (req, res, next)=>{
+            tags.find({}).toArray(function (err, result) {
+                if (err) throw err;
+                res.status(200).send(result)
+            })
+        })
+        
 
 
-        // Liens à part
+
+        // Liens catégories
         app.get('/categories', (req,res)=>{
             categories.find({}).toArray(function (err, result) {
                 if (err) throw err;
                 res.status(200).send(result)
             })
         })
-
+        app.post('/categories', (req,res)=>{
+            categories.insertOne({ name: req.body.name }, 
+                function (err, result) {
+                    if (err) throw err;
+                    res.json(result);
+            })
+        })
         app.put('/categories/:id', (req,res)=>{
             categories.updateOne({
                 _id: new ObjectId(req.params.id) 
@@ -142,14 +159,12 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
                 });
             });
         })
-
         app.delete('/categories/:id', (req,res)=>{
             categories.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
                 if (err) throw err;
                 res.json(result)
             })
         })
-
         app.get('/categories/:id', (req,res)=>{
             categories.findOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
                 if (err) throw err;
@@ -157,9 +172,11 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             })
         })
         
-        app.get('/search', (req,res, next)=>{
 
-            let parTitre = articles.find({ $or: [ { tags: req.body.input } , { title: req.body.input } ] }).toArray(function(err, result) {
+
+        //Recherche
+        app.get('/search/:id', (req,res)=>{
+            let parTitre = articles.find({ $or: [ { tags: req.params.id } , { title: req.params.id } ] }).toArray(function(err, result) {
                 if (err) throw err;
                 res.status(200).send(result)
             })
@@ -181,10 +198,20 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
             )
            
             articles.insertOne({
-                title: "article1",
-                content: "Bojoure c'est canare",
+                title: "article numéro 1",
+                content: "Bienvenue dans notre blog dédié à absolument rien",
+                categorie: "introduction",
                 version: new Date(),
                 tags: ["tag1", "tag2"]
+
+            }, function (err, result) { if (err) throw err; })
+
+            articles.insertOne({
+                title: "article numéro 2",
+                content: "Never gonna give you up. Never gonna let you doooown",
+                categorie: "musique",
+                version: new Date(),
+                tag: []
 
             }, function (err, result) { if (err) throw err; })
 
@@ -192,7 +219,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/DBTe
         })
 
         app.listen(port, ()=>{
-            console.log('listening on 3000');
+            console.log('listening on port '+port);
         });
     }
 })

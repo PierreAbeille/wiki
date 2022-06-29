@@ -10,9 +10,10 @@ export default function handler(req, res) {
         var items = resp.data;
         var result = [];
 
-        for (var item, i = 0; item = items[i++];) {
+        for (let i= items.length-1; i >= 0 ; i--){
+            let item = items[i];
             var name = item.title;
-
+            
             if (!(name in lookup)) {
                 lookup[name] = 1;
                 result.push(item);
