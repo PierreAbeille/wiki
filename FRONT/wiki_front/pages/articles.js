@@ -2,33 +2,16 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Loader from '../components/loader';
 
 
-const Articles = () => {
-    const router = useRouter();
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`/api/articles`);
-            const data = await res.json();
-            setArticles(data);
-            setLoading(false);
-        }
-        fetchData();
-    }, []);
-
-    if (loading) {
-        return <p>Loading...</p>
-    }
-
+export default function Articles({articles}) {
     return (
         <div>
             <h1>Articles</h1>
             <ul>
             {articles.map(article => (
-                    <li key={article.id}>
+                    <li key={article._id}>
                         <Link href={`/article/${article._id}`}>
                             <a>{article.title}</a>
                         </Link>
@@ -43,5 +26,12 @@ const Articles = () => {
     )
 }
 
-
-export default Articles;
+export async function getStaticProps({params}) {
+    const res = await fetch(`http://localhost:3000/articles`);
+    const articles = await res.json();
+    return {
+        props: {
+            articles
+        }
+    }
+}
