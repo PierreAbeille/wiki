@@ -18,6 +18,9 @@ export default function Articles({articles}) {
                         <Link href={`api/article/delete/${article._id}`}>
                             <a>[X]</a>
                         </Link>
+                        <Link href={`article/creer`}>
+                            <a>Créer un article</a>
+                        </Link>
                     </li>
             ))}
 
