@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-
 const Categories = () => {
     const router = useRouter();
     const [tags, setTags] = useState([]);
@@ -35,12 +34,13 @@ const Categories = () => {
                         <Link href={`api/tag/delete/${tag._id}`}>
                             <a>[X]</a>
                         </Link>
-                        <Link href={`tag/creer`}>
-                            <a>Créer un tag</a>
-                        </Link>
+                        
                     </li>
                 ))}
-            </ul>
+            </ul><br/><br/>
+            <Link href={`tag/creer`}>
+                            <a>Créer un tag</a>
+            </Link>
         </div>
     )
 }
