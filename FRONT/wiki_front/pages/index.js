@@ -10,7 +10,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('/api/articles');
+      const res = await fetch('/api/indexes/articles');
       const data = await res.json();
       setArticles(data);
       setLoading(false);
@@ -23,11 +23,11 @@ export default function Home() {
   }
   
   return (
-    <div className={styles.container}>
+    <div>
       <Sidenav />
-      <div className={styles.articles}>
-        {articles.map(article => (
-          <Article id={article._id}/>
+      <div>
+        {articles.map(article_item => (
+          <Article article={article_item}/>
         ))}
       </div>
     </div>

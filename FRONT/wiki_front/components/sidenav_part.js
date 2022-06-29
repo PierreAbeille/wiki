@@ -16,7 +16,7 @@ const SidenavPart = (type) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`/api/${typeString}`);
+            const res = await fetch(`/api/indexes/${typeString}`);
             const data = await res.json();
             setList(data);
             setLoading(false);

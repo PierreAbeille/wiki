@@ -4,38 +4,34 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 //Make a ArticlePage component that displays an Article component.
-const ArticlePage = ({id}) => {
-    const router = useRouter();
-    const { id } = router.query
-    const [article, setArticle] = useState(null);
-    const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`/api/article/${id}`);
-            const data = await res.json();
-            setArticle(data);
-            setLoading(false);
-        }
-        fetchData();
-    }, []);
-    
-    if (loading) {
-        return <p>Loading... {id}</p>
-    }
+export default function ArticlePage ({article}) {
     return (
         <div>
-            
-            
-            {/* <h1>{article.title}</h1>
+            <h1>{article.title}</h1>
             <p>{article.content}</p>
-            <p>{article.version}</p> */}
+            <p>{article.version}</p>
             
-            <Link href={`edit/${article._id}`}>
+            <Link href={`edit/${article._id}`}> 
                 <a>Editer cet article</a>
             </Link>
         </div>
     )
 }
 
-export default ArticlePage;
+export async function getStaticProps({params}) {
+    const article = await fetch(`http://localhost:3000/articles/${params.id}`).then(res => res.json());
+    return {
+        props: {    
+            article
+        }
+    }
+}
+
+export async function getStaticPaths() {
+    const res = await fetch(`http://localhost:3000/articles`);
+    const data = await res.json();
+    const paths = data.map(article => ({
+        params: { id: article._id }
+    }));
+    return { paths, fallback: false };
+}

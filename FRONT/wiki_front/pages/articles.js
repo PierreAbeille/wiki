@@ -5,25 +5,7 @@ import Link from 'next/link';
 import Loader from '../components/loader';
 
 
-const Articles = () => {
-    const router = useRouter();
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`/api/articles`);
-            const data = await res.json();
-            setArticles(data);
-            setLoading(false);
-        }
-        fetchData();
-    }, []);
-
-    if (loading) {
-        return <Loader />
-    }
-
+export default function Articles({articles}) {
     return (
         <div>
             <h1>Articles</h1>
@@ -44,5 +26,12 @@ const Articles = () => {
     )
 }
 
-
-export default Articles;
+export async function getStaticProps({params}) {
+    const res = await fetch(`http://localhost:3000/articles`);
+    const articles = await res.json();
+    return {
+        props: {
+            articles
+        }
+    }
+}
