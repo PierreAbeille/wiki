@@ -26,15 +26,3 @@ export async function getStaticPaths() {
     }));
     return { paths, fallback: false };
 }
-
-export async function getStaticProps({params}) {
-    const res = await fetch(`http://localhost:3000/articles/${params.id}`);
-    const article = await res.json();
-
-    return {
-        props: {    
-            article
-        }
-    }
-}
-
