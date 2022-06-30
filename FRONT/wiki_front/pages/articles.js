@@ -11,7 +11,6 @@ export default function Articles({result, categories, tags}) {
             <h1>Articles</h1>
             <ul>
             {result.map( (res, i) => (
-                // console.log(res);
                 <li key={res._id}>
                     <Link href={`/article/${res._id}`}>
                         <a>{res.title}</a>

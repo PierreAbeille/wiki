@@ -5,7 +5,6 @@ import Loader from '../components/loader';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  //get the last three articles
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {

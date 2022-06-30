@@ -7,7 +7,6 @@ const Sidenav = () => {
     return (
         <div className={styles.sidenav}>
             <SidenavPart type='categories' />
-            {/* <SidenavPart type='tags' /> */}
         </div>
     )
 }

@@ -8,8 +8,6 @@ export default function handler(req, res) {
     axios.put(`http://localhost:3000/categories/${id}`, 
         { 
             name: name
-        },{
-
         }
     )
     .then((resp) => {

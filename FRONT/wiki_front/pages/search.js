@@ -13,10 +13,13 @@ const Search = () => {
     useEffect(() => {
         if(!router.query) return;
         const fetchData = async () => {
-            const res = await fetch(`/api/search/${router.query.search}`);
-            const data = await res.json();
-            setSearch(data);
-            setLoading(false);
+            if (router.query.search != undefined) {
+                const res = await fetch(`/api/search/${router.query.search}`);
+                const data = await res.json();
+                setSearch(data);
+                setLoading(false);
+            }
+           
         }
         fetchData();
     }, [router.query]);
@@ -25,12 +28,10 @@ const Search = () => {
         return  <div>Loading...</div>
     }
 
-    console.log(search[0]);
-
     return (
         <div>
             <ul>
-                {search.map(s => (
+                {search.slice(0).reverse().map(s => (
                     <li>
                         {s.title}<br/>
                         {s.content}<br/>   
