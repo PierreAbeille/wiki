@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react';
 
 export default function EditerArticle({article, categories, tags}) {
 
+    //Permet de récupérer l'article et de s'en servir via setState
     let [articles, setArticle] = useState(null);
     if(articles == null) articles = {...article[0]}
 
     return (
         <div>
-            <form action="../../api/article/edit" method="POST">
+            <form action="/api/article/edit" method="POST">
                 <input type="text" name="title" id="title" 
                 onChange={(evt) =>  {
                     let newArticle = {...article[0]};
@@ -108,5 +109,3 @@ export async function getStaticProps({params}) {
         }
     }
 }
-
-// export default EditArticle

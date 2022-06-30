@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-const Categories = () => {
+const Tags = () => {
     const router = useRouter();
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -46,4 +46,4 @@ const Categories = () => {
 }
 
 
-export default Categories;
+export default Tags;

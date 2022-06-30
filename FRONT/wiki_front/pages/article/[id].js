@@ -14,6 +14,11 @@ export default function ArticlePage ({article}) {
             <Link href={`edit/${article[0]._id}`}> 
                 <a>Editer cet article</a>
             </Link>
+
+            <br/><br/>
+            <Link href={`versions/${article[0].title}`}> 
+                <a>Voir les versions de cet article</a>
+            </Link>
         </div>
     )
 }

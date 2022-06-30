@@ -58,14 +58,14 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         app.get('/articles/:id', (req,res)=>{
             articles.find({ _id: new ObjectId(req.params.id) }).toArray(function(err, result) {
                 if (err) throw err;
-                res.status(200).send(result)
+                res.status(200).json(result)
             })
         })
 
         app.get('/versions/:title', (req,res)=>{
             articles.find({ title: req.params.title }).toArray(function(err, result) {
                 if (err) throw err;
-                res.status(200).send(result)
+                res.status(200).json(result)
             })
         })
 
@@ -143,7 +143,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         app.get('/tags/:id', (req,res)=>{
             tags.findOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
                 if (err) throw err;
-                res.status(200).send(result)
+                res.status(200).json(result)
             })
         })
 
@@ -158,7 +158,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         app.get('/tags', (req, res, next)=>{
             tags.find({}).toArray(function (err, result) {
                 if (err) throw err;
-                res.status(200).send(result)
+                res.status(200).json(result)
             })
         })
         
@@ -169,7 +169,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         app.get('/categories', (req,res)=>{
             categories.find({}).toArray(function (err, result) {
                 if (err) throw err;
-                res.status(200).send(result)
+                res.status(200).json(result)
             })
         })
         app.post('/categories', (req,res)=>{
@@ -203,7 +203,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         app.get('/categories/:id', (req,res)=>{
             categories.findOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
                 if (err) throw err;
-                res.status(200).send(result)
+                res.status(200).json(result)
             })
         })
         
@@ -213,7 +213,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         app.get('/search/:id', (req,res)=>{
             let parTitre = articles.find({ $or: [ { tags: req.params.id } , { title: req.params.id } ] }).toArray(function(err, result) {
                 if (err) throw err;
-                res.status(200).send(result)
+                res.status(200).json(result)
             })
             
         })

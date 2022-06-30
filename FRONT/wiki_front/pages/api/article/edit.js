@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 
 export default function handler(req, res) {
-    // console.log(req.body);
     let id = req.body.id
     axios.put(`http://localhost:3000/articles/${id}`, 
         { 

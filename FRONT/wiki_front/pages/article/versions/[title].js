@@ -4,9 +4,9 @@ export default function VersionsArticle({article}) {
 
     return (
         <div>
-        {article.map((a,i) =>(
+        {article.slice(0).reverse().map((a,i) =>(
             <div>
-            <Link href={`truc`}>
+            <Link href={`/article/${a._id}`}>
                 <a>version du {a.version}</a>
             </Link>
             <br/><br/></div>

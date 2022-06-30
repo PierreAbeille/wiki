@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 
-const Categorie = () => {
+const Tag = () => {
     const router = useRouter();
     const { id } = router.query
     const [tag, setTag] = useState(null);
@@ -38,4 +38,4 @@ const Categorie = () => {
 }
 
 
-export default Categorie;
+export default Tag;

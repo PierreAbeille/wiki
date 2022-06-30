@@ -4,9 +4,9 @@
   "private": true,
   "proxy": "http://localhost:3000",
   "scripts": {
-    "dev": "next dev",
+    "dev": "set PORT=3001 && next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "set PORT=3006 && next start",
     "lint": "next lint"
   },
   "dependencies": {
