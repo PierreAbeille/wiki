@@ -13,7 +13,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
     if (err) throw err;
     else {
         console.log("Connecté à la base de données");
-        let db = client.db('DBTest');
+        let db = client.db('Wiki');
         let ObjectId = require('mongodb').ObjectId;
         let articles = db.collection('articles');
         let tags = db.collection('tags');
@@ -40,7 +40,8 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
                 title: req.body.title, 
                 content: req.body.content, 
                 version: Date.now(),
-                tags: req.body.tags 
+                tags: req.body.tags,
+                categorie: req.body.categorie
             }, 
                 function (err, result) {
                     if (err) throw err;
@@ -61,24 +62,58 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
             })
         })
 
+        app.get('/versions/:title', (req,res)=>{
+            articles.find({ title: req.params.title }).toArray(function(err, result) {
+                if (err) throw err;
+                res.status(200).send(result)
+            })
+        })
+
         
 
         app.put('/articles/:id', (req,res)=>{
-            let article = articles.findOne({ _id: req.params.id }, function (err, result) {
-                if (err) throw err;
-            })
-            articles.insertOne({
-                    title: req.body.title,
-                    content: req.body.content,
-                    version: Date.now(),
-                    tags: req.body.tags
-            }, function (err, result) {
-                if (err) throw err;
-                res.json({
-                    status: "200",
-                    data: result
+
+            // Si on veut créer une nouvelle version
+            if(req.body.nvVersion){
+                let article = articles.findOne({ _id: req.params.id }, function (err, result) {
+                    if (err) throw err;
+                })
+                articles.insertOne({
+                        title: req.body.title,
+                        content: req.body.content,
+                        version: Date.now(),
+                        categorie: req.body.categorie,
+                        tags: req.body.tags,
+                }, function (err, result) {
+                    if (err) throw err;
+                    res.json({
+                        status: "200",
+                        data: result
+                    });
                 });
-            });
+
+            //Pas de nouvelle version
+            //Si on veut juste corriger une faute de frappz, par exemple
+            }else{
+                articles.updateOne({
+                    _id: new ObjectId(req.params.id) 
+                }, {
+                    $set: {
+                        title: req.body.title,
+                        content: req.body.content,
+                        categorie: req.body.categorie,
+                        tags: req.body.tags
+                    }
+                }, function (err, result) {
+                    if (err) throw err;
+                    res.json({
+                        status: "200",
+                        data: result
+                    });
+                });
+            }
+
+            
         })
 
 
@@ -186,7 +221,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         // Initialisation de la base de données
         app.get('/api/db/init', (req,res)=>{
 
-            var creerCollections = ["categories", "tags", "wiki"];
+            var creerCollections = ["categories", "tags", "articles"];
             creerCollections.forEach(function(collectionName) {db.createCollection(collectionName)})
 
             categories.insertMany(
@@ -208,7 +243,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
 
             articles.insertOne({
                 title: "article numéro 2",
-                content: "Never gonna give you up. Never gonna let you doooown",
+                content: "Never gonna give you up. Never gonna let you down",
                 categorie: "musique",
                 version: new Date(),
                 tag: []

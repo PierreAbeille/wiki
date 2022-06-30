@@ -42,8 +42,8 @@ const Categories = () => {
                 ))}
             </ul><br/><br/>
             <Link href={`categorie/creer`}>
-                            <a>Créer une catégorie</a>
-                        </Link>
+                <a>Créer une catégorie</a>
+            </Link>
         </div>
     )
 }

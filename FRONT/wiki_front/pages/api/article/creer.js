@@ -5,12 +5,16 @@ import { useRouter } from 'next/router';
 export default function handler(req, res) {
     let title = req.body.title
     let content = req.body.content
+    let categorie = req.body.categorie
+    let tags = req.body.tags
+
     axios.post(`http://localhost:3000/articles`, 
         { 
             title: title,
             content: content,
             date: new Date(),
-            tags: ["tag1","tag3"]
+            categorie: categorie,
+            tags: tags
         }
     )
     .then(() => {

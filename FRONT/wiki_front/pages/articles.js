@@ -5,36 +5,60 @@ import Link from 'next/link';
 import Loader from '../components/loader';
 
 
-export default function Articles({articles}) {
+export default function Articles({result, categories, tags}) {
     return (
         <div>
             <h1>Articles</h1>
             <ul>
-            {articles.map(article => (
-                    <li key={article._id}>
-                        <Link href={`/article/${article._id}`}>
-                            <a>{article.title}</a>
-                        </Link>
-                        <Link href={`api/article/delete/${article.title}`}>
-                            <a>[X]</a>
-                        </Link>
-                    </li>
+            {result.map( (res, i) => (
+                // console.log(res);
+                <li key={res._id}>
+                    <Link href={`/article/${res._id}`}>
+                        <a>{res.title}</a>
+                    </Link>
+                    <Link href={`api/article/delete/${res._id}`}>
+                        <a>[X]</a>
+                    </Link>
+                </li>
             ))}
 
-            </ul><br/><br/>
+            </ul>
             <Link href={`article/creer`}>
-                            <a>Créer un article</a>
-                        </Link>
+                        <a>Créer un article</a>
+                    </Link>
         </div>
     )
 }
 
 export async function getStaticProps({params}) {
-    const res = await fetch(`http://localhost:3000/articles`);
-    const articles = await res.json();
+    const arts = await fetch(`http://localhost:3000/articles`);
+    const articles = await arts.json();
+
+    const cats = await fetch(`http://localhost:3000/categories`);
+    const categories = await cats.json();
+
+    const t = await fetch(`http://localhost:3000/tags`);
+    const tags = await t.json();
+
+    var lookup = {};
+    var items = articles;
+    var result = [];
+
+    for (let i= items.length-1; i >= 0 ; i--){
+        let item = items[i];
+        var name = item.title;
+        
+        if (!(name in lookup)) {
+            lookup[name] = 1;
+            result.push(item);
+        }
+    }
+
     return {
         props: {
-            articles
+            result,
+            categories,
+            tags
         }
     }
 }
