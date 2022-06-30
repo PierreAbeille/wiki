@@ -18,7 +18,8 @@ export default function Article({article}) {
 export async function getStaticProps({
     params
 }) {
-    const article = await fetch(`http://localhost:3000/articles/${params.id}`).then(res => res.json());
+    const res = await fetch(`http://localhost:3000/articles/${params.id}`)
+    const article = await res.json()
     return {
         props: {
             article
