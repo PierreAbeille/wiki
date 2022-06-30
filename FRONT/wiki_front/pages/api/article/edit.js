@@ -3,17 +3,16 @@ import { useRouter } from 'next/router';
 
 
 export default function handler(req, res) {
+    // console.log(req.body);
     let id = req.body.id
-    let title = req.body.title
-    let content = req.body.content
     axios.put(`http://localhost:3000/articles/${id}`, 
         { 
-            title: title,
-            content: content,
+            title: req.body.title,
+            content: req.body.content,
             date: new Date(),
-            tags: ["tag1","tag8"]
-        },{
-
+            tags: req.body.tags,
+            categorie: req.body.categorie,
+            nvVersion: req.body.version
         }
     )
     .then(() => {

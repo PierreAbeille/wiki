@@ -3,29 +3,21 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-//Make a ArticlePage component that displays an Article component.
+// Make a ArticlePage component that displays an Article component.
 export default function ArticlePage ({article}) {
     return (
         <div>
-            <h1>{article.title}</h1>
-            <p>{article.content}</p>
-            <p>{article.version}</p>
+            <h1>{article[0].title}</h1>
+            <p>{article[0].content}</p>
+            <p>{article[0].version}</p>
             
-            <Link href={`edit/${article._id}`}> 
+            <Link href={`edit/${article[0]._id}`}> 
                 <a>Editer cet article</a>
             </Link>
         </div>
     )
 }
 
-export async function getStaticProps({params}) {
-    const article = await fetch(`http://localhost:3000/articles/${params.id}`).then(res => res.json());
-    return {
-        props: {    
-            article
-        }
-    }
-}
 
 export async function getStaticPaths() {
     const res = await fetch(`http://localhost:3000/articles`);
@@ -35,3 +27,15 @@ export async function getStaticPaths() {
     }));
     return { paths, fallback: false };
 }
+
+export async function getStaticProps({params}) {
+    const res = await fetch(`http://localhost:3000/articles/${params.id}`);
+    const article = await res.json();
+
+    return {
+        props: {    
+            article
+        }
+    }
+}
+
