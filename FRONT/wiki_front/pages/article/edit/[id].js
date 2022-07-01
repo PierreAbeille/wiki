@@ -67,7 +67,7 @@ export default function EditerArticle({article, categories, tags}) {
                 
                 <input type="checkbox" name="version" id="version"
                 onChange={(evt) => {
-                    let newArticle = {...article[0]};
+                    let newArticle = {...article};
                     let newVersion = evt.target.checked
                     newArticle.nvVersion = newVersion
                     setArticle(newArticle);
