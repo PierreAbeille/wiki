@@ -10,8 +10,8 @@ const SidenavPart = (type) => {
     const [loading, setLoading] = useState(true);
 
     const typeString = type.type;
+    const typeStringShort = typeString.slice(0, -1);
 
-    const typeStringSingulier = typeString.charAt(0) + typeString.slice(1);
 
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const SidenavPart = (type) => {
             <ul>
                 {list.map(item => (
                     <li>
-                        <Link href={`/${typeStringSingulier}/${item._id}`}>
+                        <Link href={`/${typeStringShort}/${item._id}`}>
                             <a>{item.name}</a>
                         </Link>
                     </li>

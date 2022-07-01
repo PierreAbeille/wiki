@@ -16,7 +16,7 @@ export default function Tags (props) {
     return (
         <div>
             <h2>Tags</h2>
-            <div className="styles.tags">
+            <div className={styles.tags}>
                 {props.tags.map(tag => (
                     <Chips key={tag._id} tag={tag} deleteTag={true} />
                 ))}
