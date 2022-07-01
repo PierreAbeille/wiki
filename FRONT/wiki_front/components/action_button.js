@@ -13,8 +13,8 @@ export default function ActionButton({ action, icon, alt, styleClass, text }) {
         <div className={styles.action_button}>
             <Link href={action}>
                 <a>
-                    {icon && <img src={icon} alt={alt} className={styleClass}/>}
                     {text && <span>{text}</span>}
+                    {icon && <img src={icon} alt={alt} className={styleClass}/>}
                 </a>
             </Link>
         </div>

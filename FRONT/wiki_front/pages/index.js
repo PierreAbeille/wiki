@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 export default function Home({tags}) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch('/api/indexes/articles');

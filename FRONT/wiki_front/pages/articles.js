@@ -3,11 +3,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Loader from '../components/loader';
+import styles from '../styles/pages.module.scss';
+import ActionButton from '../components/action_button';
 
 
 export default function Articles({result, categories, tags}) {
     return (
-        <div>
+        <div className={styles.articles__list}>
             <h1>Articles</h1>
             <ul>
             {result.map( (res, i) => (
@@ -15,16 +17,14 @@ export default function Articles({result, categories, tags}) {
                     <Link href={`/article/${res._id}`}>
                         <a>{res.title}</a>
                     </Link>
-                    <Link href={`api/article/delete/${res.title}`}>
-                        <a>[X]</a>
-                    </Link>
+                    <ActionButton action={`api/article/delete/${res.title}`} icon={'/IcBaselineCancel.svg'} alt={'Delete'} styleClass={styles.delete_button}/>
                 </li>
             ))}
 
             </ul>
-            <Link href={`article/creer`}>
-                        <a>Créer un article</a>
-                    </Link>
+            <div className={styles.add_button}>
+                <ActionButton action={'article/creer'} icon={'/IcRoundPlus.svg'} alt={'Create'} text={'Créer un article'} styleClass={styles.add_icon}/>
+            </div>
         </div>
     )
 }
