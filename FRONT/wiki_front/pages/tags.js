@@ -4,24 +4,13 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Chips from '../components/chips';
 import styles from '../styles/pages.module.scss';
+import axios from 'axios';
 
-const Tags = () => {
+export default function Tags ({ tags }) {
     const router = useRouter();
-    const [tags, setTags] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`/api/indexes/tags`);
-            const data = await res.json();
-            setTags(data);
-            setLoading(false);
-        }
-        fetchData();
-    }, []);
-
-    if (loading) {
-        return <p>Loading...</p>
+    const refreshTags = () => {
+        router.replace(router.asPath)
     }
 
     return (
@@ -29,17 +18,36 @@ const Tags = () => {
             <h2>Tags</h2>
             <div className="styles.tags">
                 {tags.map(tag => (
-                    <div key={tag._id}>
-                        <Chips tag={tag} deleteTag />
-                    </div>
+                    <Chips key={tag._id} tag={tag} deleteTag={true} />
                 ))}
             </div>
             <Link href={`tag/creer`}>
                             <a>Créer un tag</a>
-            </Link>
+            </Link> 
+            <form action="../api/tag/creer" method="POST">
+                <input type="text" name="name" id="name" placeholder='Créer un tag'/>
+                <input type="image" src="/IcRoundAddCircle.Svg" alt="Submit" />
+            </form>
         </div>
     )
 }
 
+export async function getServerSideProps() {
+    const res = await fetch(`http://localhost:3000/tags`);
+    const tags = await res.json();
 
-export default Tags;
+    return {
+        props: {
+            tags
+        }
+    }
+}
+
+async function handleSubmit() {
+    const res = await axios.post('/api/tag/creer', {
+        name: document.getElementById('name').value
+    });
+    if (res.status < 300) {
+        refreshTags();
+    }
+}
