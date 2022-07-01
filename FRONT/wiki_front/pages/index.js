@@ -4,7 +4,7 @@ import Article from '../components/article';
 import Loader from '../components/loader';
 import { useState, useEffect } from 'react';
 
-export default function Home() {
+export default function Home({tags}) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -31,8 +31,19 @@ export default function Home() {
         ))}
       </div>
       <div className={styles.sidenav}>
-        <Sidenav />
+        <Sidenav tags={tags} />
       </div>
     </div>
   )
+}
+
+export async function getStaticProps({params}) {
+  const res = await fetch(`http://localhost:3000/tags`)
+  const tags = await res.json()
+
+  return {
+      props: {
+          tags
+      }
+  }
 }

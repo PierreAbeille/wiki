@@ -4,15 +4,15 @@ import SidenavPart from './sidenav_part';
 import Tags from '../pages/tags';
 
 
-const Sidenav = () => {
+const Sidenav = (props) => {
     return (
         <div className={styles.sidenav}>
             <div>
                 <h2>Catégories</h2>
-                <SidenavPart type='categories' />
+                <SidenavPart type='categorie' />
             </div>
             <div>
-                <Tags />
+                <Tags tags={props.tags} />
             </div>
         </div>
     )
