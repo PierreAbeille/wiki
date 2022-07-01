@@ -21,9 +21,6 @@ export default function Tags (props) {
                     <Chips key={tag._id} tag={tag} deleteTag={true} />
                 ))}
             </div>
-            <Link href={`tag/creer`}>
-                <a>Créer un tag</a>
-            </Link> 
             <form action="../api/tag/creer" method="POST">
                 <input type="text" name="name" id="name" placeholder='Créer un tag'/>
                 <input type="image" src="/IcRoundAddCircle.Svg" alt="Submit" />

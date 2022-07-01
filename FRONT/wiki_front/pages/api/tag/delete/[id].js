@@ -8,7 +8,7 @@ export default function handler(req, res) {
         method: "DELETE"
     })
     .then((resp) => {
-        res.redirect('/tags');
+        res.redirect('/');
     })
     .catch((err) => { console.log(err) });
 }
