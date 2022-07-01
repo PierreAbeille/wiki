@@ -22,12 +22,16 @@ export default function Home() {
   }
   
   return (
-    <div>
-      <Sidenav />
-      <div>
+    <div className={styles.home}>
+      <div className={styles.articles__container}>
         {articles.map(article_item => (
-          <Article article={article_item}/>
+          <div className={styles.article__item}>
+            <Article article={article_item}/>
+          </div>
         ))}
+      </div>
+      <div className={styles.sidenav}>
+        <Sidenav />
       </div>
     </div>
   )

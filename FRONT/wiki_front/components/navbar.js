@@ -1,12 +1,21 @@
 import styles from '../styles/components.module.scss'
 import React from 'react';
 import NavbarTab from './navbar_tab';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Navbar = () => {
     return (
         <div className={styles.navbar}>
             <nav>
                 <ul>
+                    <li>
+                        <Link href="/">
+                            <a>
+                                <Image src="/Logo.svg" width={168} height={40} />
+                            </a>
+                        </Link>
+                    </li>
                     <li>
                         <NavbarTab link='/articles' text='Articles' />
                     </li>
@@ -18,8 +27,8 @@ const Navbar = () => {
                     </li>
                 </ul>
                 <form action="/search" method="GET">
-                    <input type="search" name="search" id="search" placeholder="Search"/>
-                    <button type="submit">Search</button>
+                    <input type="search" name="search" id="search" placeholder="Rechercher un article"/>
+                    <button type="submit">Rechercher</button>
                 </form>
             </nav>
         </div>

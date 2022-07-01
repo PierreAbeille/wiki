@@ -29,7 +29,7 @@ const SidenavPart = (type) => {
     }
 
     return (
-        <div>
+        <div className={styles.sidenav__part}>
             <ul>
                 {list.map(item => (
                     <li>
