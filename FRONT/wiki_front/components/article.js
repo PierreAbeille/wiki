@@ -5,7 +5,9 @@ import ActionButton from './action_button';
 export default function Article({article}) {
     return (
         <div className={styles.article}>
-            <h2>{article.title}</h2>
+            <Link href={`/article/${article._id}`}>
+                <a><h2>{article.title}</h2></a>
+            </Link>
             <p>{article.content}</p>
 
             <div className={styles.article__footer}>
@@ -16,8 +18,6 @@ export default function Article({article}) {
                     <ActionButton action={`/article/versions/${article.title}`} icon="/IcBaselineAssignment.Svg" alt="Versions" styleClass={styles.article__actions__versions} />
                 </div>
             </div>
-
-
         </div>
 
     )

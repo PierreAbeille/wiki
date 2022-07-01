@@ -1,19 +1,29 @@
+import styles from '../../styles/pages.module.scss';
+
 export default function CreerArticle({categories, tags}) {
 
     return (
-        <form action="/api/article/creer" method="POST">
-                Titre : <input type="text" name="title" id="title"/><br/>
-                Contenu : <textarea name="content" id="content"/><br/>
+        <form action="/api/article/creer" method="POST" className={styles.page_form}>
+            <div>
+                Titre : <input type="text" name="title" id="title"/>
+            </div>
+            <div>
+                Contenu : <textarea name="content" id="content"/>
+            </div>
+            <div>
                 Ajouter une catégorie<select name="categorie" id ="categorie">
                     {categories.map(c => (
                         <option value={c.name}>{c.name}</option>
                     ))}
-                </select><br/>
+                </select>
+            </div>
+            <div>
                 Ajouter un tag<select name="tags" id ="tags" multiple>
                     {tags.map(t => (
                         <option value={t.name}>{t.name}</option>
                     ))}
-                </select><br/>
+                </select>
+            </div>
                 <input type="submit"/>
         </form>
     )

@@ -1,4 +1,4 @@
-import styles from '../../../styles/components.module.scss';
+import styles from '../../../styles/pages.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ export default function EditerArticle({article, categories, tags}) {
 
     return (
         <div>
-            <form action="/api/article/edit" method="POST">
+            <form action="/api/article/edit" method="POST" className={styles.page_form}>
                 <input type="text" name="title" id="title" 
                 onChange={(evt) =>  {
                     let newArticle = {...article[0]};
