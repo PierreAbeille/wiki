@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import styles from '../styles/components.module.scss';
 
 export default function Article({article}) {
     return (
-        <div>
-            <h1>{article.title}</h1>
+        <div className={styles.article}>
+            <h2>{article.title}</h2>
             <p>{article.content}</p>
-            <p>{article.version}</p>
+            <p>{new Date(article.version).toLocaleDateString()}</p>
 
             <Link href={`edit/${article._id}`}> 
                     <a>Editer cet article</a>
