@@ -22,13 +22,10 @@ const Navbar = () => {
                     <li>
                         <NavbarTab link='/categories' text='Catégories' />
                     </li>
-                    <li>
-                        <NavbarTab link='/tags' text='Tags' />
-                    </li>
                 </ul>
                 <form action="/search" method="GET">
                     <input type="search" name="search" id="search" placeholder="Rechercher un article"/>
-                    <button type="submit">Rechercher</button>
+                    <input type="image" src="/IcRoundSearch.Svg" alt="Submit" />
                 </form>
             </nav>
         </div>

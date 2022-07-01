@@ -2,6 +2,7 @@
 
 import styles from '../styles/components.module.scss';
 import Link from 'next/link';
+import ActionButton from './action_button';
 
 export default function Chips({ tag, deleteTag }) {
     return (
@@ -10,9 +11,7 @@ export default function Chips({ tag, deleteTag }) {
                 <a>{tag.name}</a>
             </Link>
             {deleteTag && 
-                <Link href={`api/tag/delete/${tag._id}`}>
-                    <a className={styles.chip__delete}>X</a>
-                </Link>
+                <ActionButton action={`api/tag/delete/${tag._id}`} icon={'/IcBaselineCancel.svg'} alt={'edit'} styleClass={styles.chip__delete}/>
             }
         </div>
     )

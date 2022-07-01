@@ -47,17 +47,7 @@
         }
 
         form {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            
             input, button {
-                border-radius: 10px;
                 border: 1px solid #e6e6e6;
                 padding: 8px; 
                 margin: 0;
@@ -65,19 +55,8 @@
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                font-size: 1rem;
-                font-weight: bold;
-                color: #242424;
-                text-decoration: none;
-                transition: all 0.3s ease-in-out;
-                cursor: pointer;
-
-                
-                &:focus {
-                    outline: none;
-                }
             }
-  
+
             button:hover {
                 color: #fff;
                 background-color: #00a8ff;
@@ -88,7 +67,7 @@
 
 .sidenav {
     height: calc(100vh - 77px);
-    width: 200px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     background-color: #f1f1f1;
@@ -130,6 +109,7 @@
 .article {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 16px;
     align-items: center;
     height: 100%;
@@ -155,6 +135,67 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
     }
+
+    .article__footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+    }
+
+    .article__actions {
+        display: flex;
+        height: 32px;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 32px;
+
+        .action_button {
+            //make a circle button with a centered icon
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 32px;
+            width: 32px;
+            
+            .article__actions__edit {
+                border-radius: 50%;
+                border: 1px solid #e6e6e6;
+                padding: 5px;
+                background-color: #00a8ff;
+
+
+                &:hover {
+                    background-color: #fff;
+                }
+            }
+
+            .article__actions__restore {
+                border-radius: 50%;
+                border: 1px solid #e6e6e6;
+                padding: 5px;
+                background-color: #EE7144;
+
+                &:hover {
+                    background-color: #fff;
+                }
+            }
+
+            .article__actions__versions {
+                border-radius: 50%;
+                border: 1px solid #e6e6e6;
+                padding: 5px;
+                background-color: #7A44EE;
+
+                &:hover {
+                    background-color: #fff;
+                }
+            }
+        }
+
+    }
+
 }
 
 .chip {
@@ -175,7 +216,20 @@
     margin: 0.5rem;
     cursor: pointer;
 
+    .action_button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a {
+            height: 24px;
+            width: 24px;
+        }
+    }
     .chip__delete {
+        height: 24px;
+        width: 24px; 
+
         &:hover {
             //make it jiggle when hovering
             animation: jiggle 0.5s ease-in-out infinite;

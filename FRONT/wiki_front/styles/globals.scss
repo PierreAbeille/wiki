@@ -18,11 +18,53 @@ body {
   box-sizing: border-box;
 }
 
-Link {
+a {
+  text-decoration: none;
   font-weight: bold;
-  color: #00a8ff;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-Link:hover {
-  text-decoration: underline;
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  input {
+      border: 1px solid #e6e6e6;
+      height: 36px;
+      padding: 8px; 
+      margin: 0;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #242424;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+   
+      &:focus {
+          outline: none;
+      }
+
+      //first input has border-radius of 10px on left side
+      &:first-child {
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+      }
+      //second input has border-radius of 10px on right side
+      &:last-child {
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+      }
+  }
+
+
+
 }

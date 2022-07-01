@@ -9,7 +9,7 @@ const Sidenav = (props) => {
         <div className={styles.sidenav}>
             <div>
                 <h2>Catégories</h2>
-                <SidenavPart type='categorie' />
+                <SidenavPart type='categories' />
             </div>
             <div>
                 <Tags tags={props.tags} />

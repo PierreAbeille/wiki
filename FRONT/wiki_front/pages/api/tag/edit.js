@@ -11,7 +11,7 @@ export default function handler(req, res) {
         }
     )
     .then((resp) => {
-        res.redirect('/tags')  
+        res.redirect('/')  
     })
     .catch((err) => { console.log(err) });
 }
