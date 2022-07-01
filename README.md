@@ -94,44 +94,63 @@ MongoDB parcourant les items dans l'ordre, et ajoutant toujours les entrées à 
 
 
 ## Contrat d'interface ##
+
+### Index ###
 > /
+
 Index contenant tous les articles, catégories et tags
 
+### Articles ###
 > /articles
+
 Retourne une liste de tous les articles avec possibilité de les supprimer, modifier, consulter les anciennes versions, restaurer une ancienne version, et créer un nouvel article
 
 > /article/[id]
+
 Retourne un article et les options qui lui sont associés
 
 > /article/creer
+
 Retourne un formulaire de création d'article
 
 > /article/edit/[id]
 Retourne un formulaire de modification d'article
 
 > /article/versions/[title]
+
 Retourne une liste des versions (datés) d'un article
 
+### Catégories ###
 > /categories
+
 Retourne une liste de toutes les catégories avec possibilité de les supprimer, modifier ou d'en ajouter
 
 > /categorie/[id]
+
 Retourne tout les articles associés à une catégorie, avec possibilité de modifier la catégorie
 
 > /categories/creer
+
 Retourne un formulaire de création de catégorie
 
+### Tags ###
 > /tags
+
 Retourne une liste de tous les tags avec possibilité de les supprimer, modifier ou d'en ajouter (directement intégré dans la sidenav)
 
 > /tag/[id]
+
 Retourne un formulaire de modification de tag
 
 > /tag/creer
+
 Retourne un formulaire de création de tag (n'est plus utilisé, car directement intégré à la sidenav de l'index)
 
+### Search ###
 > /search
+
 Retourne une liste de résultats de recherche
+
 ## Documentation API ##
 
 #### Initialisation ####
