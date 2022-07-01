@@ -53,6 +53,46 @@ Si la base de données a bien été initialisée, le serveur renverra la répons
 
  > Bdd initialisée
 
+## Structure de la base de données ##
+
+La base de données contient 3 collections, une "wiki", une "tags" et une "categories"
+Les tags et les catégories sont très simples, les objets ne sont composés que d'un seul attribut name.
+
+categories :
+
+> {
+>     _id: "ObjectId",
+>     name: "catégorie 1"
+> }
+
+tags :
+
+> {
+>     _id: "ObjectId",
+>     name: "tag 1"
+> }
+
+Les articles (forcément) sont plus complèxes :
+
+> {
+>     "_id":{"$oid":"62bee1ea9f52c5c94048b394"},
+>     "title":"article numéro 2",
+>     "content":"Never gonna give you up. Never gonna let you down",
+>     "version": 1656676842109,
+>     "tags":["tag2","Rick","Rolled"],
+>     "categorie":"musique"
+> }
+
+Ils ont : un titre, un contenu, une version, et des tags et catégories.
+Les tags et catégories sont récupérés dans la base de données, un article a une et une seule catégorie, et peut avoir autant de tags qu'il en existe.
+Le titre et le contenu sont renseignés dans des formulaires lors de la création ou de la modification d'un article.
+
+Pour les versions nous avons décidé de les gérer par timestamp. Chaque fois qu'un article est créé, modifié ou qu'une nouvelle version est créée, l'entrée en DB est gérée par un *Date.now()*.
+
+Sur la page d'accueil, et des articles, l'idée était d'afficher seulement la dernière version d'un article. Pour gérer ça, nous avons décidé de parcourir la base de données depuis la fin, et de garder seulement la première occurence trouvée d'un même article. 
+MongoDB parcourant les items dans l'ordre, et ajoutant toujours les entrées à la fin, ça ne pose aucun problème de trier comme ça.
+
+
 ## Contrat d'interface ##
 
 
