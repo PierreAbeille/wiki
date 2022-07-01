@@ -15,7 +15,7 @@ export default function Articles({result, categories, tags}) {
                     <Link href={`/article/${res._id}`}>
                         <a>{res.title}</a>
                     </Link>
-                    <Link href={`api/article/delete/${res._id}`}>
+                    <Link href={`api/article/delete/${res.title}`}>
                         <a>[X]</a>
                     </Link>
                 </li>
