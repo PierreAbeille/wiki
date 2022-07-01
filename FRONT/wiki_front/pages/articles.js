@@ -9,7 +9,7 @@ import ActionButton from '../components/action_button';
 
 export default function Articles({result, categories, tags}) {
     return (
-        <div className={styles.articles__list}>
+        <div className={styles.pages__list}>
             <h1>Articles</h1>
             <ul>
             {result.map( (res, i) => (

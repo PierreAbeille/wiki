@@ -1,21 +1,20 @@
-import styles from '../../styles/components.module.scss';
+import styles from '../../styles/pages.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Article from '../../components/article';
 
 export default function categorieId ({categorie, result}) {
     return (
         <div>
             <h1>Articles de {categorie.name}</h1>
-
-            {result.map((a,i) =>(
-                <div>
-                <Link href={`/article/${a._id}`}>
-                    <a>{a.title}</a>
-                </Link>
-                <br/></div>
-                    
-            ))}
+            <div className={styles.articles__container}>
+                {result.map((a,i) =>(
+                    <div className={styles.article__item}>
+                        <Article article={a}/>
+                    </div>
+                ))}
+            </div>
 
             <form action="/api/categorie/edit" method="POST">
                 Choisir un nouveau nom pour cette catégorie : <input name="name" id="name" type="text"/>

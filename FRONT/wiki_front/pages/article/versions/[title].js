@@ -1,15 +1,16 @@
 import Link from 'next/link';
+import styles from '../../../styles/pages.module.scss';
 
 export default function VersionsArticle({article}) {
 
     return (
-        <div>
+        <div className={styles.content_list}>
         {article.slice(0).reverse().map((a,i) =>(
-            <div>
-            <Link href={`/article/${a._id}`}>
-                <a>version du {a.version}</a>
-            </Link>
-            <br/><br/></div>
+            <div className={styles.content_list_item} key={i}>
+                <Link href={`/article/${a._id}`}>
+                    <a>Version du {new Date(a.version).toLocaleDateString()}</a>
+                </Link>
+            </div>
         ))}
         
         </div>

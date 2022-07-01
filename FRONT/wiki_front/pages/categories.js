@@ -2,7 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
+import styles from '../styles/pages.module.scss';
+import ActionButton from '../components/action_button';
 
 const Categories = () => {
     const router = useRouter();
@@ -26,7 +27,7 @@ const Categories = () => {
     }
 
     return (    
-        <div>
+        <div className={styles.pages__list}>
             <h1>Catégories</h1>
             <ul>
                 {categories.map(category => (
@@ -34,16 +35,13 @@ const Categories = () => {
                         <Link href={`/categorie/${category._id}`}>
                             <a>{category.name}</a>
                         </Link>
-                        <Link href={`api/categorie/delete/${category._id}`}>
-                            <a>[X]</a>
-                        </Link>
-                        
+                        <ActionButton action={`api/categorie/delete/${category._id}`} icon={'/IcBaselineCancel.svg'} alt={'Delete'} styleClass={styles.delete_button}/>                   
                     </li>
                 ))}
-            </ul><br/><br/>
-            <Link href={`categorie/creer`}>
-                <a>Créer une catégorie</a>
-            </Link>
+            </ul>
+            <div className={styles.add_button}>
+                <ActionButton action={'categorie/creer'} icon={'/IcRoundPlus.svg'} alt={'Create'} text={'Créer une catégorie'} styleClass={styles.add_icon}/>
+            </div>
         </div>
     )
 }
