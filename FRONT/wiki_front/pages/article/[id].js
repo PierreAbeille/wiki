@@ -1,8 +1,11 @@
 import Article from '../../components/article';
+import styles from '../../styles/pages.module.scss';
+import Chips from '../../components/chips';
+import axios from 'axios';
 
-export default function ArticlePage ({article}) {
+export default function ArticlePage ({article} ) {
     return (
-        <div>
+        <div className={styles.article__page}>
             <Article article={article[0]} />
         </div>
     )

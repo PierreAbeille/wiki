@@ -45,6 +45,63 @@
                     }
             }
         }
+
+        form {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            
+            input, button {
+                border-radius: 10px;
+                border: 1px solid #e6e6e6;
+                padding: 8px; 
+                margin: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                font-size: 1rem;
+                font-weight: bold;
+                color: #242424;
+                text-decoration: none;
+                transition: all 0.3s ease-in-out;
+                cursor: pointer;
+
+                
+                &:focus {
+                    outline: none;
+                }
+            }
+  
+            button:hover {
+                color: #fff;
+                background-color: #00a8ff;
+            }
+        }
+    }
+}
+
+.sidenav {
+    height: calc(100vh - 77px);
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f1f1;
+    padding: 20px;
+    gap: 32px;
+
+    .sidenav__part {
+        > ul {
+            > li {
+                list-style: none;
+                text-transform: capitalize;
+            }
+        } 
     }
 }
 
@@ -67,5 +124,76 @@
         border: 5px solid #fff;
         border-top: 5px solid #00a8ff;
         animation: spin 1s linear infinite;
+    }
+}
+
+.article {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    h2 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #242424;
+        margin: 0;
+        text-transform: capitalize;
+    }
+
+    //crop text if container is too small
+    p {
+        font-size: 1.2rem;
+        font-weight: normal;
+        color: #242424;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+}
+
+.chip {
+    //make width of chip dynamic based on text length
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    border-radius: 50px;
+    background-color: #00a8ff;
+    padding: 0.2rem 1rem;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin: 0.5rem;
+    cursor: pointer;
+
+    .chip__delete {
+        &:hover {
+            //make it jiggle when hovering
+            animation: jiggle 0.5s ease-in-out infinite;
+        }
+
+        @keyframes jiggle {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(5deg);
+            }
+            50% {
+                transform: rotate(-5deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
     }
 }
