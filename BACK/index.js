@@ -19,14 +19,6 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         let tags = db.collection('tags');
         let categories = db.collection('categories');
 
-
-        // app.get('/', (req, res)=>{
-        //     res.send('Bienvenue')
-        // })
-
-
-
-
         // Liens ARTICLES
         app.get('/articles', (req, res, next)=>{
             articles.find({}).toArray(function (err, result) {
@@ -61,6 +53,12 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
                 res.status(200).json(result)
             })
         })
+        app.get('/articlesCategorie/:id', (req,res)=>{
+            articles.find({ categorie: req.params.id }).toArray(function(err, result) {
+                if (err) throw err;
+                res.status(200).json(result)
+            })
+        })
 
         app.get('/versions/:title', (req,res)=>{
             articles.find({ title: req.params.title }).toArray(function(err, result) {
@@ -69,8 +67,33 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
             })
         })
 
-        
+        app.put('/article/restore/:id', (req,res) => {
+            articles.find({ _id: new ObjectId(req.params.id)}).toArray(function(err, result) {
+                if (err) throw err;
 
+                console.log(result);
+
+                articles.insertOne({ 
+                    title: result[0].title, 
+                    content: result[0].content, 
+                    version: Date.now(),
+                    tags: result[0].tags,
+                    categorie: result[0].categorie
+                }, 
+                function (err, result) {
+                    if (err) throw err;
+                })
+
+                articles.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
+                    if (err) throw err;
+                    
+                })
+                res.status(200).json(result)
+            })
+            
+            
+        })
+        
         app.put('/articles/:id', (req,res)=>{
 
             // Si on veut créer une nouvelle version
@@ -126,6 +149,40 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
             })
         })
         app.put('/tags/:id', (req,res)=>{
+            // Cette longue méthode remplace le nom du tag
+            // Mais aussi les articles en changeant le nom du tag dans l'article
+            tags.findOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
+                if (err) throw err;
+
+                // D'abord on trouve les articles avec le tag à modifier
+                articles.find({ tags: result.name }).toArray(function(err1, result1) {
+                    if (err1) throw err1;
+                    result1.forEach(r =>{
+                        //Si r.tags est un tableau (donc a au moins 2 tags)
+                        if(Array.isArray(r.tags)){
+                            //Enlever un tag
+                            r.tags.splice(r.tags[r.tags.indexOf(result.name)], 1);
+                            //Ajouter le nouveau tag
+                            r.tags.push(req.body.name)
+                        }
+                        //Si ce n'est pas un tableau, il suffit de remplacer la valeur
+                        else{
+                            r.tags = req.body.name
+                        }
+                        
+                        //Mettre à jour l'article
+                        articles.updateOne({
+                            _id: new ObjectId(r._id)
+                        },{
+                            $set: {
+                                tags: r.tags
+                            }
+                        }, function (err2, result2){
+                            if (err2) throw err2;
+                        })    
+                    })
+                })
+            })
             tags.updateOne({
                 _id: new ObjectId(req.params.id) 
             }, {
@@ -180,6 +237,22 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
             })
         })
         app.put('/categories/:id', (req,res)=>{
+
+            //Trouver l'ancien nom de la catégorie, et mettre à jour les articles avec le nouveau nom
+            categories.findOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
+                if (err) throw err;
+                articles.updateMany({
+                    categorie: result.name
+                },{
+                    $set: {
+                        categorie: req.body.name
+                    }
+                }, function (err2, result2){
+                    if (err2) throw err2;
+                })
+            })
+
+            //Changer le nom de la catégorie
             categories.updateOne({
                 _id: new ObjectId(req.params.id) 
             }, {
@@ -193,6 +266,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
                     data: result
                 });
             });
+            
         })
         app.delete('/categories/:id', (req,res)=>{
             categories.deleteOne({ _id: new ObjectId(req.params.id)}, function (err, result){
@@ -221,7 +295,11 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
         // Initialisation de la base de données
         app.get('/api/db/init', (req,res)=>{
 
+
             var creerCollections = ["categories", "tags", "articles"];
+
+            creerCollections.forEach(function(collectionName) {db.collection(collectionName).drop()})
+
             creerCollections.forEach(function(collectionName) {db.createCollection(collectionName)})
 
             categories.insertMany(
@@ -236,7 +314,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
                 title: "article numéro 1",
                 content: "Bienvenue dans notre blog dédié à absolument rien",
                 categorie: "introduction",
-                version: new Date(),
+                version: Date.now(),
                 tags: ["tag1", "tag2"]
 
             }, function (err, result) { if (err) throw err; })
@@ -246,7 +324,7 @@ MongoClient.connect('mongodb+srv://mongo:Mongo31@cluster0.cetno.mongodb.net/wiki
                 content: "Never gonna give you up. Never gonna let you down",
                 categorie: "musique",
                 version: new Date(),
-                tag: []
+                tag: ["tag1", "tag3"]
 
             }, function (err, result) { if (err) throw err; })
 
