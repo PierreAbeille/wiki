@@ -6,7 +6,9 @@ import axios from 'axios';
 export default function ArticlePage ({article} ) {
     return (
         <div className={styles.article__page}>
-            <Article article={article[0]} />
+            <div className={styles.article_id}>
+                <Article article={article[0]} />
+            </div>
         </div>
     )
 }

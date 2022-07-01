@@ -107,8 +107,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 700px;
-    padding: 64px;
+    .article_id {
+        width: 700px;
+        padding: 64px;
+    }
 }
 
 .add_form {
