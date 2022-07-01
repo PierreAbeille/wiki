@@ -10,6 +10,14 @@ export default function Article({article}) {
 
             <Link href={`edit/${article._id}`}> 
                     <a>Editer cet article</a>
+            </Link><br/><br/>
+
+            <Link href={`/api/article/restore/${article._id}`}>
+                <a>Restaurer cet article</a>
+            </Link><br/><br/>
+
+            <Link href={`versions/${article.title}`}>
+                <a>Voir les versions de cet article</a>
             </Link>
         </div>
 
