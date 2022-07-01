@@ -8,7 +8,7 @@ export default function Article({article}) {
             <p>{article.content}</p>
             <p>{new Date(article.version).toLocaleDateString()}</p>
 
-            <Link href={`edit/${article._id}`}> 
+            <Link href={`/article/edit/${article._id}`}> 
                     <a>Editer cet article</a>
             </Link><br/><br/>
 
@@ -16,7 +16,7 @@ export default function Article({article}) {
                 <a>Restaurer cet article</a>
             </Link><br/><br/>
 
-            <Link href={`versions/${article.title}`}>
+            <Link href={`/article/versions/${article.title}`}>
                 <a>Voir les versions de cet article</a>
             </Link>
         </div>
