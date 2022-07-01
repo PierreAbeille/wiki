@@ -6,7 +6,7 @@ import Chips from '../components/chips';
 import styles from '../styles/pages.module.scss';
 import axios from 'axios';
 
-export default function Tags ({ tags }) {
+export default function Tags (props) {
     const router = useRouter();
 
     const refreshTags = () => {
@@ -17,12 +17,12 @@ export default function Tags ({ tags }) {
         <div>
             <h2>Tags</h2>
             <div className="styles.tags">
-                {tags.map(tag => (
+                {props.tags.map(tag => (
                     <Chips key={tag._id} tag={tag} deleteTag={true} />
                 ))}
             </div>
             <Link href={`tag/creer`}>
-                            <a>Créer un tag</a>
+                <a>Créer un tag</a>
             </Link> 
             <form action="../api/tag/creer" method="POST">
                 <input type="text" name="name" id="name" placeholder='Créer un tag'/>
@@ -32,10 +32,12 @@ export default function Tags ({ tags }) {
     )
 }
 
-export async function getServerSideProps() {
-    const res = await fetch(`http://localhost:3000/tags`);
-    const tags = await res.json();
 
+// Si on laisse la page de tags il faut laisser la fonction là
+export async function getStaticProps({params}) {
+    const res = await fetch(`http://localhost:3000/tags`)
+    const tags = await res.json()
+  
     return {
         props: {
             tags
