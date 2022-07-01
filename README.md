@@ -101,24 +101,30 @@ MongoDB parcourant les items dans l'ordre, et ajoutant toujours les entrées à 
 #### Initialisation ####
 
 > /api/db/init GET
+
 Initialise la base de données.
 
 #### articles ####
 
 > /articles GET
+
 Retourne tous les articles
 
 > /articles POST
+
 Ajoute un article depuis une page de formulaire
 
 > /articles/:id GET
+
 Retourne l'article ayant pour identifiant **id**
 
 > /articles/:id DELETE
+
 Supprime l'article ayant pour **_NOM_** **id**
 Le fait d'utiliser un nom ici et non pas un id, permet de supprimer tous les articles d'un même nom.
 
 > /articles/:id PUT
+
 Met à jour l'article ayant pour identifiant **id**
 
 **ATTENTION** : Lorsque l'on change le titre d'un article, un nouvel article est créé.
@@ -144,42 +150,53 @@ Retourne tous les articles ayant pour *categorie* la chaîne de caractères **id
 #### categories ####
 
 > /categories GET
+
 Retourne toute les catégories
 
 > /categories POST
+
 Ajoute une catégorie via le biais d'un formulaire
 
 > /categories/:id GET
+
 Retourne la catégorie ayant pour identifiant **id**
 
 > /categories/:id PUT 
+
 Met à jout la catégorie ayant pour identifiant **id**
 La méthode permet aussi de modifier les articles liés à la catégorie modifiée, en changeant leur attribut "catégorie" dans la base de données.
 
 > /categories/:id DELETE
+
 Supprime la catégorie ayant pour identifiant **id**
 
 #### tags ####
 
 > /tags GET
+
 Retourne tous les tags
 
 > /tags POST
+
 Modifie un tag via le biais d'un formulaire
 
 > /tags/:id GET
+
 Retourne le tag ayant pour identifiant **id**
 
 > /tags/:id DELETE
+
 Supprime le tag ayant pour identifiant **id**
 
 > /tags/:id PUT
+
 Met à jour le tag ayant pour identifiant **id**
 La méthode permet aussi de modifier les articles liés au tag modifié, en changeant leur attribut "tags" dans la base de données.
 
 #### Autres ####
 
 > /search/:string 
+
 Retourne tous les articles qui correspondent à l'entrée *string* dans la barre de recherche, 
 Soit par 
 - tag
@@ -190,5 +207,6 @@ Si je fais une recherche "Bonjour", et qu'un article a pour titre "Bonjour" ou a
 Pour le moment la requête est sensible à la casse et ne permet pas encore de trouver un article qui comporte plus de mots que la recherche
 
 > /versions/:title
+
 Retourne tous les articles comportant le même nom.
 Cette requête est notamment utile pour le versionnage, notre base de données dupliquant les articles, elle nous permet de retrouver toutes les versions d'un même article.
